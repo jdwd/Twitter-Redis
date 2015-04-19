@@ -1,0 +1,12 @@
+<div ng-controller="tweetsCtrl">
+    <form class="form-horizontal" name="addTweet" ng-submit="">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Contenu du tweet</label>
+            <div class="col-sm-10" ng-class="{'has-error': errors.tweets_content}">
+                <input id="tweets_content" name="tweets_content" ng-model="content" type="text" placeholder="Ecrivez votre tweet... " class="form-control input-md" required="true">
+                <p class="help-block" ng-model="errors.project_name" ng-show="errors.tweets_content">Veuillez entrer un nom de projet.</p>
+            </div>
+            <button class="btn btn-lg" ng-click="envoyer()" ng-disabled="addTweet.$invalid"> Envoyer </button>
+        </div>
+    </form>
+</div>

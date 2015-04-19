@@ -1,0 +1,24 @@
+<html>
+<head>
+    <script src="https://code.angularjs.org/1.3.9/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+<div ng-controller="myCtrl">
+
+    <button ng-click="sendPost()">Send</button>
+
+</div>
+</body>
+<script type="text/javascript">
+    var app = angular.module('myApp', [])
+            .controller('myCtrl', function ($scope, $http) {
+                console.log($scope)
+                $scope.sendPost = function () {
+                    console.log("SEND !")
+                    var data = JSON.stringify({"name": "John Doe"});
+                    $http.post("http://localhost:81/stalk", data);
+                }
+            })
+</script>
+
+</html>
