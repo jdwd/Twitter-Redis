@@ -8,7 +8,6 @@ var router = express.Router();
 
 /* GET tweets listing. */
 router.get('/user/:idUser', function (req, res, next) {
-
     var idUser = req.params.idUser;
     tweetService.getAllTweetsFromUser(idUser, function (err, data) {
         if (data !== null) {
@@ -27,7 +26,7 @@ router.get('/user/:idUser', function (req, res, next) {
 router.get('/search/:hashtag', function (req, res, next) {
     var hashtag = req.params.hashtag;
     tweetService.getTweetsContainHashtag(hashtag, function (err, data) {
-        if (data !== null) {
+        if (data !== undefined) {
             res.send(data);
         }
         else {

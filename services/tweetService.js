@@ -15,18 +15,50 @@ var tweetService = {
 
     //Récupération de tous les tweets d'un user
     getAllTweetsFromUser: function (userKey, callback) {
-        db.getAllTweetsFromUser(userKey, callback);
+        var finalList = [];
+        //Récupération de la liste des tweets d'un utilisateur
+        db.getAllTweetsFromUser(userKey, function (err, data) {
+
+            if (data !== undefined) {
+                var allTweets = data;
+
+                //Récupération du nom d'utilisateur
+                var author;
+                db.getUserName(userKey, function (err2, data2) {
+                    if (data2 !== undefined) {
+                        author = data2;
+
+                        for (var tweetIndex in allTweets) {
+                            var tweet = {};
+                            tweet.content = allTweets[tweetIndex];
+                            tweet.author = author;
+                            finalList.push(tweet);
+                        }
+                        callback(null, finalList);
+                    } else {
+                        callback(null, null);
+                    }
+
+                });
+            } else {
+                callback(null, null);
+            }
+
+        });
     },
 
     //Récupération du dernier tweet d'un user
     getLast: function (userKey, callback) {
 
-    },
+    }
+
+    ,
 
     //Compte le nombre de tweet d'un user
     countTweets: function (userKey, callback) {
 
-    },
+    }
+    ,
 
     /**
      * Récupère la liste des tweets contenant le Hashtag
@@ -34,18 +66,22 @@ var tweetService = {
      * @param callback
      */
     getTweetsContainHashtag: function (hashtag, callback) {
-       db.getAllTweetsFromAllUsers(function (err, data) {
-            //TODO
-           console.log("data: "+data);
-        });
-        var finalList = [];
-
-        /*for (var tweet in allTweets) {
-            if (tweetUtils.containsHashtag(tweet)) {
-                finalList.push(tweet);
+        db.getAllTweetsFromAllUsers(function (err, data) {
+            if (data !== undefined) {
+                var allTweets = data;
+                var finalList = [];
+                for (var tweet in allTweets) {
+                    if (tweetUtils.containsHashtag(allTweets[tweet].content, "#" + hashtag)) {
+                        finalList.push(allTweets[tweet]);
+                    }
+                }
+                callback(null, finalList);
+            } else {
+                callback(null, null);
             }
-        }
-        callback.setData(finalList);*/
+        });
+
+
     }
 
 

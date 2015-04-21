@@ -1,27 +1,29 @@
 <div ng-controller="tweetsCtrl">
-    <form class="form-horizontal" name="addTweet" ng-submit="envoyer()">
-        <div class="form-group">
-            <!-- <label class="col-sm-2 control-label"></label> -->
-            <div class="col-sm-12" ng-class="{'has-error': errors.tweets_content}">
-                <div class="form-group col-lg-12">
-                    <input type="text" ng-model="content" ng-trim="false" id="tweets_content"
-                           name="tweets_content" required="true"
-                           placeholder="Ecrivez votre tweet... "
-                           class="form-control" autofocus></textarea>
+    <div class="well">
+            <form class="form-horizontal" name="addTweet" ng-submit="envoyer()">
+                <div class="form-group">
+                    <!-- <label class="col-sm-2 control-label"></label> -->
+                    <div class="col-sm-12" ng-class="{'has-error': errors.tweets_content}">
+                        <div class="form-group col-lg-12">
+                            <input type="text" ng-model="content" ng-trim="false" id="tweets_content"
+                                   name="tweets_content" required="true"
+                                   placeholder="Ecrivez votre tweet... "
+                                   class="form-control" autofocus></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <span ng-class="{'size_error': content.length > 140}">{{content.length || 0}}</span>
+                            <button type="submit" class="btn btn-default"
+                                    ng-disabled="content === undefined || content.length > 140 || content.length == 0 ">
+                                Twitter
+                            </button>
+                        </div>
+                    </div>
+                    <p class="help-block" ng-model="errors.project_name" ng-show="errors.tweets_content">Veuillez saisir
+                        un
+                        tweet.</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-right">
-                    <span ng-class="{'size_error': content.length > 140}">{{content.length || 0}}</span>
-                    <button type="submit" class="btn btn-default"
-                            ng-disabled="content === undefined || content.length > 140 || content.length == 0 ">
-                        Twitter
-                    </button>
-                </div>
-            </div>
-            <p class="help-block" ng-model="errors.project_name" ng-show="errors.tweets_content">Veuillez saisir un
-                tweet.</p>
-        </div>
-</div>
-</form>
+            </form>
+    </div>
 </div>

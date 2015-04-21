@@ -2,12 +2,14 @@
  * Created by maxoumime on 26/03/15.
  */
 var app = angular.module('twitterNoSQL', [
-   'ngRoute',
-   'tweets.module'
+    'ngRoute',
+    'tweets.module',
+    'users.module'
 
 ]);
 
-app.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/',    {templateUrl: '/javascript/accueil.html', controller: 'tweetsCtrl'});
+app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/', {templateUrl: '/javascript/accueil.html', controller: 'tweetsCtrl'});
+    $routeProvider.when('/', {templateUrl: '/javascript/accueil.html', controller: 'usersCtrl'});
     $routeProvider.otherwise({redirectTo: '/'});
 }]);

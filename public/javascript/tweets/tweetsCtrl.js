@@ -25,14 +25,15 @@ tweetsModule.controller('tweetsCtrl', ['$scope', '$location', '$http', '$route',
         })
     },
 
-        //scope permet d'acceder aux variables de la vue IHM
-        $scope.rechercher = function () {
-           var hashtag = $scope.content;
-            $http.get("/tweets/search/" + hashtag).success(function (data) {
-                //Permet de rafraichir l'affichage des tweets
-                $route.reload();
-                toastr.info("Recherche : " + hashtag);
-            })
-        }
+    //scope permet d'acceder aux variables de la vue IHM
+    $scope.rechercher = function () {
+        var hashtag = $scope.content;
+        $http.get("/tweets/search/" + hashtag).success(function (data) {
+            toastr.info("Recherche : " + hashtag);
+            //Permet de rafraichir l'affichage des tweets;
+            $scope.tweetsFinded = data;
+
+        })
+    }
 }]);
 
