@@ -3,38 +3,57 @@
  */
 
 var express = require('express');
+var tweetService = require('../services/tweetService');
 var router = express.Router();
 
 /* GET tweets listing. */
-router.get('/', function(req, res, next) {
+router.get('/user/:idUser', function (req, res, next) {
 
-        //get all my last 5 tweets
+    var idUser = req.params.idUser;
+    tweetService.getAllTweetsFromUser(idUser, function (err, data) {
+        if (data !== null) {
+            res.send(data);
+        }
+        else {
+            //Cas ou il n'y a pas de tweet on ne retourne rien
+            res.send();
+        }
 
-        res.send(tweets);
+    })
+})
+;
 
+/* GET tweets listing. */
+router.get('/search/:hashtag', function (req, res, next) {
+    var hashtag = req.params.hashtag;
+    tweetService.getTweetsContainHashtag(hashtag, function (err, data) {
+        if (data !== null) {
+            res.send(data);
+        }
+        else {
+            //Cas ou il n'y a pas de tweet on ne retourne rien
+            res.send();
+        }
+    });
 });
+
 
 /* POST add tweet*/
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
     var content = req.body.content;
-    var id = req.body.id;
+    var id = 1;
     // Request à la base de données
-
-    res.send("tralalal");
+    tweetService.add(id, content, function (err, data) {
+        if (data !== undefined) {
+            res.statusCode = 200;
+        }
+        else {
+            res.statusCode = 400;
+        }
+        res.end();
+    })
 
 });
 
-/* GET tweet by ID. */
-router.get('/:id', function(req, res, next) {
-    // Récupération du tweet par son ID
-    var idUser = req.params.id;
-
-    var tweets = [
-        {content: "MON PREMIER TWEET", id: idUser},
-        {content: "MON SECOND TWEET", id: idUser},
-        {content: "MON TROISIEME TWEET", id: idUser}
-    ];
-    res.send(tweets);
-});
 
 module.exports = router;

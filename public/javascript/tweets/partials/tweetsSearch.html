@@ -1,0 +1,20 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <img alt="Twitter" src="images/twitter.png">
+        </div>
+        <div ng-controller="tweetsCtrl">
+            <form class="navbar-form navbar-left" name="searchHashtag" ng-submit="rechercher()">
+                <div class="col-sm-12" ng-class="{'has-error': errors.hashtag_content}">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" id="hashtag_content" name="hashtag_content" ng-model="content"
+                                   class="form-control" placeholder="Hashtag" required="true">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>

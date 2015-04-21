@@ -3,19 +3,19 @@
  */
 
 var db = require('./db');
-//var hashdb = require('./db/hashdb');
-var async = require('async');
+var tweetUtils = require('./tweetUtils');
 
 var tweetService = {
 
     //Ajout d'un nouveau tweet
-    add: function (myKey, tweet, callback) {
+    add: function (myKey, newTweet, callback) {
         //ajout de 'tweet' dans la liste des tweets de l'utilisateur dont la clé est myKey
+        db.addNewTweet(myKey, newTweet, callback);
     },
 
     //Récupération de tous les tweets d'un user
-    getAll: function (userKey, callback) {
-
+    getAllTweetsFromUser: function (userKey, callback) {
+        db.getAllTweetsFromUser(userKey, callback);
     },
 
     //Récupération du dernier tweet d'un user
@@ -24,13 +24,31 @@ var tweetService = {
     },
 
     //Compte le nombre de tweet d'un user
-    countTweets: function(userKey, callback){
+    countTweets: function (userKey, callback) {
 
     },
 
-    //Retourne vrai si le tweet contient un HashTag
-    containsHashtag: function(keyUser, idTweet, callback)
-    {
+    /**
+     * Récupère la liste des tweets contenant le Hashtag
+     * @param hashtag
+     * @param callback
+     */
+    getTweetsContainHashtag: function (hashtag, callback) {
+       db.getAllTweetsFromAllUsers(function (err, data) {
+            //TODO
+           console.log("data: "+data);
+        });
+        var finalList = [];
 
+        /*for (var tweet in allTweets) {
+            if (tweetUtils.containsHashtag(tweet)) {
+                finalList.push(tweet);
+            }
+        }
+        callback.setData(finalList);*/
     }
+
+
 }
+
+module.exports = tweetService;

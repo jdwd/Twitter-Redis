@@ -1,16 +1,40 @@
-<div class="row">
-   <div class="col-lg-4">
+<div>
+    <div ng-include src="'javascript/tweets/partials/tweetsSearch.html'"/>
+</div>
+
+<!--<div class="row">
+    <div class="col-md-4">
         <div ng-include src="'javascript/tweets/partials/tweetsCreate.html'"/>
     </div>
-</div>
-<div class="row">
-
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <div ng-include src="'javascript/tweets/partials/tweetsView.html'"/>
     </div>
-</div>
-<div class="row">
-   <div class="col-lg-4">
-        SALUT TOI
+    <div class="col-md-4">
+        test de zone
     </div>
+</div>-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            Zone Profile
+            <div ng-include src="'javascript/tweets/partials/tweetsCreate.html'"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div ng-include src="'javascript/tweets/partials/tweetsView.html'"></div>
+        </div>
+
+        <div class="col-md-4">
+            <div ng-include src="'javascript/tweets/partials/tweetsView.html'"></div>
+        </div>
+
+        <div class="col-md-4">
+            <div ng-include src="'javascript/tweets/partials/tweetsView.html'"></div>
+        </div>
+
+    </div>
+
 </div>
+

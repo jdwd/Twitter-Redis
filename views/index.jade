@@ -4,11 +4,11 @@ html(ng-app="twitterNoSQL")
         base(href='/')
         title Twitter
         link(rel='stylesheet', href='/javascript/components/bootstrap/dist/css/bootstrap.min.css')
-        link(rel='stylesheet', href='javascript/components/toastr/toastr.min.css')
+        link(rel='stylesheet', href='/javascript/components/toastr/toastr.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
 
     body
-        div(class=container)
-            div(ng-view)
+        div(ng-view)
 
     script(src='javascript/components/angular/angular.js')
     script(src='javascript/components/jquery/dist/jquery.js')

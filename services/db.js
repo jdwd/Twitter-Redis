@@ -1,24 +1,19 @@
 var redis = require("redis");
-var async = require('async');
-var uuid = require('node-uuid');
 
 var port = "6379";
 var host = "bluebell.me";
-
-var client = redis.createClient(port, host);
-
-client.on("connect", function(){});
-
-var TWEET = "tweet";
 var USER = "user";
-var NEXT_TWEET = "next_tweet";
+
+var client = redis.createClient(port, host, {auth_pass: "redis.twitter.pass"});
+client.on("connect", function () {
+    console.log("connecté à " + host);
+})
+
 
 var db = {
 
-    //Initialiacation des constantes
-    TWEET: TWEET,
-    USER: USER,
     client: client,
+    user: USER,
 
     //Fonctions
     //Récupération de tous les éléments
@@ -26,30 +21,84 @@ var db = {
         return client.smembers(type, callback);
     },
 
-    //Suppression de la clé
-    delete: function (type, key, callback) {
-        db.generateKey(type, key, function(generatedKey){
-            async.parallel([
-                function (callback) {
-                    client.del(generatedKey, callback)
-                },
-                function (callback) {
-                    client.srem(type, db.getSuffixKey(generatedKey), callback)
-                }
-            ], function (err, results) {
-                callback(results[0] == 1 && results[1] == 1);
-            });
-        });
+    getAllTweetsFromUser: function (myKey, callback) {
+        //récupération des tweets de l'utilisateur myKey
+        var prefix = USER + ":" + myKey;
+        var tweets = client.lrange(prefix + ":tweets", 0, -1, callback);
+        var author = client.get(prefix + ":userName");
     },
 
-    generateKey: function(type, key, callback) {
-        if (key !== undefined)
-            callback(type + ":" + key);
-        else {
-            callback(type + ":" + uuid.v4());
-        }
+    addNewTweet: function (myKey, newTweet, callback) {
+        //ajout du tweet
+        var key = USER + ":" + myKey + ":tweets";
+        var tweetContent = newTweet;
+        client.rpush([key, newTweet], callback)
+    },
+
+    //Suppression de la clé
+    delete: function (type, key, callback) {
+
+    },
+
+    /************************************************************/
+    /*                     Fonctions "utils"                    */
+    /************************************************************/
+    getAllUsersKeys: function (callback) {
+
+        // Récupération de toutes les clées au format user:*
+        client.keys(USER + ":*", function (err, data) {
+                if (data !== undefined) {
+                    var allKeys = data;
+
+                    var res = [];
+                    var segmentKey = [];
+                    //parcours de chaque clée afin de ne récuperer que les id des utilisateurs
+                    for (var key in allKeys) {
+                        segmentKey = (allKeys[key].split(":"))[1];
+                        //évite les doublons
+                        if (res.indexOf(segmentKey) === -1) {
+                            res.push(segmentKey);
+                        }
+                    }
+                    //callback.data = res;
+                } else {
+                    //callback.data = undefined;
+                }
+
+                 // Comment faire un retour ?
+            }
+        )
+    },
+
+    getAllTweetsFromAllUsers: function (callback) {
+
+        var allTweets = [];
+        //récupération de l'ensemble des utilisateurs
+        db.getAllUsersKeys(function (err, data) {
+            //TODO
+            console.log("dataUsers: " + data);
+        });
+
+        /*if (keys !== undefined || keys.size !== 0) {
+         for (var userKey in keys) {
+         var prefix = USER + ":" + userKey;
+
+         var author = client.get(prefix + ":userName");
+         var tweets = client.lrange(prefix + ":tweets", 0, -1);
+         var tweetObject = {};
+
+         for (var tweet in tweets) {
+         tweetObject.content = tweet;
+         tweetObject.author = author;
+         allTweets.push(tweetObject);
+         }
+         }
+         return allTweets;
+         }*/
     }
+
 };
+
 
 module.exports = db;
 
