@@ -1,13 +1,45 @@
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
-img{
-    max-width:60%; /* you can use % */
-    height: auto;
+img {
+    max-height: 70px;
 }
 
-.size_error{
+.size_error {
     color: #eb9316;
     font-weight: bold;
+}
+
+.userName-info {
+    color: #777777;
+    letter-spacing: 2px;
+}
+
+.header-info {
+    text-align: center;
+    font-variant: small-caps;
+}
+
+.count {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.modal-backdrop {
+    opacity: 0.5;
+}
+
+.tweet_content
+{
+    font-size: 120%;
+    font-style: italic;
+    text-align: center;
+    color: #666666;
+}
+.author{
+    color:#337AB7;
+    font-variant: small-caps;
+    text-align: right;
 }

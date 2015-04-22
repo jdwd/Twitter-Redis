@@ -3,7 +3,6 @@ var userService = require('../services/userService');
 var router = express.Router();
 
 
-
 //Récupère le nom d'utilisateur d'un user
 router.get('/:idUser', function (req, res, next) {
     var idUser = req.params.idUser;
@@ -19,7 +18,7 @@ router.get('/:idUser', function (req, res, next) {
     })
 })
 
-router.get('/nbrTweets/:idUser', function (req, res, next) {
+router.get('/tweets/nbr/:idUser', function (req, res, next) {
     var idUser = req.params.idUser;
     userService.getNumberTweets(idUser, function (err, data) {
         if (data !== null) {
@@ -33,7 +32,23 @@ router.get('/nbrTweets/:idUser', function (req, res, next) {
     })
 }),
 
-    router.get('/nbrFollowing/:idUser', function (req, res, next) {
+    router.get('/followers/:idUser', function (req, res, next) {
+        var idUser = req.params.idUser;
+        userService.getFollowers(idUser, function(err, data){
+            res.send(data);
+        })
+
+    }),
+
+    router.get('/following/:idUser', function (req, res, next) {
+        var idUser = req.params.idUser;
+        userService.getFollowing(idUser, function(err, data){
+            res.send(data);
+        })
+
+    }),
+
+    router.get('/following/nbr/:idUser', function (req, res, next) {
         var idUser = req.params.idUser;
         userService.getNumberFollowing(idUser, function (err, data) {
             if (data !== null) {
@@ -47,7 +62,7 @@ router.get('/nbrTweets/:idUser', function (req, res, next) {
         })
     })
 
-router.get('/nbrFollowers/:idUser', function (req, res, next) {
+router.get('/followers/nbr/:idUser', function (req, res, next) {
     var idUser = req.params.idUser;
     userService.getNumberFollowers(idUser, function (err, data) {
         if (data !== null) {

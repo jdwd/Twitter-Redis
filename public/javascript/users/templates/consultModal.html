@@ -1,0 +1,29 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">
+                    {{title}}
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form name="formConsult">
+                        <div class="row">
+                            <div class="col-lg-offset-3 col-lg-6">
+                                <p>
+
+                                <div ng-repeat="user in allUsers">
+                                    <li class="list-group-item">
+                                        <p class="author"> {{user.userName}}</p></li>
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

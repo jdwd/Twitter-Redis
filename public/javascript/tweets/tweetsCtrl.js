@@ -11,7 +11,14 @@ tweetsModule.controller('tweetsCtrl', ['$scope', '$location', '$http', '$route',
         })
     }
 
+    function getLastTweetForEachFollowing(idUser) {
+        $http.get("/tweets/following/last/" + idUser).success(function (data) {
+            $scope.tweetsFollowing = data;
+        })
+    }
+
     getMyTweets(1);
+    getLastTweetForEachFollowing(1);
 
     //scope permet d'acceder aux variables de la vue IHM
     $scope.envoyer = function () {
@@ -27,13 +34,15 @@ tweetsModule.controller('tweetsCtrl', ['$scope', '$location', '$http', '$route',
 
     //scope permet d'acceder aux variables de la vue IHM
     $scope.rechercher = function () {
-        var hashtag = $scope.content;
-        $http.get("/tweets/search/" + hashtag).success(function (data) {
+        var hashtag = $scope.hashtag_content;
+        var page = $scope.page;
+        $http.get("/tweets/search/" + hashtag+"?page="+page).success(function (data) {
             toastr.info("Recherche : " + hashtag);
             //Permet de rafraichir l'affichage des tweets;
             $scope.tweetsFinded = data;
-
         })
     }
+
+    $scope.tweetsFinded = [];
 }]);
 

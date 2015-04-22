@@ -9,7 +9,7 @@ var userService = {
     follow: function (myKey, keyToNewFollowing, callback) {
         // Ajouter keyToNewFollowing  dans la liste des following
     },
-    getUserName: function(myKey, callback){
+    getUserName: function (myKey, callback) {
         //Récupère le nom d'utilisateur d'un user
         db.getUserName(myKey, callback);
     },
@@ -27,6 +27,14 @@ var userService = {
     getNumberTweets: function (myKey, callback) {
         //Récupération des tweets
         db.getNumberTweetsFromUser(myKey, callback);
+    },
+
+    getFollowers: function (myKey, callback) {
+        db.getAllFollowersFromUser(myKey, callback);
+    },
+
+    getFollowing: function (myKey, callback) {
+        db.getAllFollowingFromUser(myKey, callback);
     }
 }
 module.exports = userService;

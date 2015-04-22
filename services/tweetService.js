@@ -7,13 +7,22 @@ var tweetUtils = require('./tweetUtils');
 
 var tweetService = {
 
-    //Ajout d'un nouveau tweet
+    /**
+     * Création d'un nouveau tweet
+     * @param myKey
+     * @param newTweet
+     * @param callback
+     */
     add: function (myKey, newTweet, callback) {
         //ajout de 'tweet' dans la liste des tweets de l'utilisateur dont la clé est myKey
         db.addNewTweet(myKey, newTweet, callback);
     },
 
-    //Récupération de tous les tweets d'un user
+    /**
+     * Récupération de tous les tweets d'un utilisateur
+     * @param userKey
+     * @param callback
+     */
     getAllTweetsFromUser: function (userKey, callback) {
         var finalList = [];
         //Récupération de la liste des tweets d'un utilisateur
@@ -47,19 +56,6 @@ var tweetService = {
         });
     },
 
-    //Récupération du dernier tweet d'un user
-    getLast: function (userKey, callback) {
-
-    }
-
-    ,
-
-    //Compte le nombre de tweet d'un user
-    countTweets: function (userKey, callback) {
-
-    }
-    ,
-
     /**
      * Récupère la liste des tweets contenant le Hashtag
      * @param hashtag
@@ -80,8 +76,15 @@ var tweetService = {
                 callback(null, null);
             }
         });
+    },
 
-
+    /**
+     * Récupération du dernier tweet de chaque utilisateur suivi
+     * @param myKey
+     * @param callback
+     */
+    getLastTweetOfEachFollowing: function (myKey, callback) {
+        db.getLastTweetOfEachFollowing(myKey, callback);
     }
 
 

@@ -1,42 +1,150 @@
-<div>
-    <div ng-include src="'javascript/tweets/partials/tweetsSearch.html'"/>
+<div ng-controller="tweetsCtrl">
+    <div>
+        <!--<div ng-include src="'javascript/tweets/partials/tweetsSearch.html'"/>-->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img alt="Twitter" src="images/bluebell_01.png">
+                </div>
+                <div>
+                    <form class="navbar-form navbar-left" name="searchHashtag" ng-submit="rechercher()">
+                        <div class="col-sm-12" ng-class="{'has-error': errors.hashtag_content}">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">#</span>
+                                    <input type="text" id="hashtag_content" name="hashtag_content"
+                                           ng-model="hashtag_content"
+                                           class="form-control input-lg" placeholder="Hashtag" required="true">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!--<div class="row">
+        <div class="col-md-4">
+            <div ng-include src="'javascript/tweets/partials/tweetsCreate.html'"/>
+        </div>
+        <div class="col-md-4">
+            <div ng-include src="'javascript/tweets/partials/tweetsView.html'"/>
+        </div>
+        <div class="col-md-4">
+            test de zone
+        </div>
+    </div>-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div ng-controller="usersCtrl">
+                    <div class="panel panel-default">
+                        <div class="panel-body"><h2 class="userName-info">{{ userName }}</h2></div>
+                        <table class="table">
+                            <table class="table">
+                                <thead>
+                                <tr class="header-info">
+                                    <th>Tweets</th>
+                                    <th>Followers</th>
+                                    <th>Following</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="count">
+                                    <td>{{nbrTweets}}</td>
+                                    <td>
+                                        <button data-toggle="modal" ng-click="consultFollowers()"
+                                                class="btn btn-primary btn-large"> {{nbrFollowers}}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" ng-click="consultFollowing()"
+                                                class="btn btn-primary btn-large"> {{nbrFollowing}}
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+
+                <div class="well">
+                    <form class="form-horizontal" name="addTweet" ng-submit="envoyer()">
+                        <div class="form-group">
+                            <div class="col-sm-12" ng-class="{'has-error': errors.tweets_content}">
+                                <div class="form-group col-lg-12">
+                                    <input type="text" ng-model="content" ng-trim="false" id="tweets_content"
+                                           name="tweets_content" required="true"
+                                           placeholder="Ecrivez votre tweet... "
+                                           class="form-control" autofocus></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <span ng-class="{'size_error': content.length > 140}">{{content.length || 0}}</span>
+                                    <button type="submit" class="btn btn-primary"
+                                            ng-disabled="content === undefined || content.length > 140 || content.length == 0 ">
+                                        Twitter
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="help-block" ng-model="errors.project_name" ng-show="errors.tweets_content">
+                                Veuillez saisir un tweet.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <!-- <div ng-include src="'javascript/tweets/partials/tweetsFind.html'"></div> -->
+                <div class="col-md-12">
+                    <div class="well well-sm">
+                        <h3>Hashtag search result</h3>
+                    </div>
+                    <ul class="list-group">
+                        <div ng-repeat="tweet in tweetsFinded">
+                            <li class="list-group-item"><p class="tweet_content">{{tweet.content}}</p>
+                                <p class="author"> {{tweet.author}}</p></li>
+                        </div>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="well well-sm">
+                        <h3>Timeline</h3>
+                    </div>
+                    <ul class="list-group">
+                        <div ng-repeat="tweet in tweets">
+                            <li class="list-group-item"><p class="tweet_content">{{tweet.content}}</p>
+                                <p class="author"> {{tweet.author}}</p></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="well well-sm">
+                        <h3>Last tweet of each following</h3>
+                    </div>
+                    <ul class="list-group">
+                        <div ng-repeat="tweet in tweetsFollowing">
+                            <li class="list-group-item"><p class="tweet_content">{{tweet.content}}</p>
+                                <p class="author"> {{tweet.author}}</p></li>
+                        </div>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </div>
-
-<!--<div class="row">
-    <div class="col-md-4">
-        <div ng-include src="'javascript/tweets/partials/tweetsCreate.html'"/>
-    </div>
-    <div class="col-md-4">
-        <div ng-include src="'javascript/tweets/partials/tweetsView.html'"/>
-    </div>
-    <div class="col-md-4">
-        test de zone
-    </div>
-</div>-->
-<div class="container">
-    <div class="row">
-        <div class="col-md-5">
-            <div ng-include src="'javascript/users/partials/usersInfo.html'"></div>
-        </div>
-        <div class="col-md-7">
-            <div ng-include src="'javascript/tweets/partials/tweetsCreate.html'"></div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div ng-include src="'javascript/tweets/partials/tweetsFind.html'"></div>
-        </div>
-
-        <div class="col-md-4">
-            <div ng-include src="'javascript/tweets/partials/tweetsView.html'"></div>
-        </div>
-
-        <div class="col-md-4">
-            <div ng-include src="'javascript/tweets/partials/tweetsView.html'"></div>
-        </div>
-
-    </div>
-
-</div>
-
